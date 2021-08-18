@@ -5,19 +5,41 @@ This README contains the script for dockerfile and the script to run thrift serv
 There are two methods to build Gazelle Docker Image
 
 ### Prerequisite
-Building Spark Base Docker Image
+Before building the Docker image, you should
+1. Proxy Setting
+Please edit the Dockerfile before run docker build.
+You can use below method to add your proxy configuration in the Dockerfile. Please make sure to set up 1. http_proxy 2. HTTP_PROXY and 3. https_proxy 4. HTTPS_PROXY variables.
+```
+ARG http_proxy=http://xxx_proxy_address:port
+ENV http_proxy http://xxx_proxy_address:port
+```
+
+You can also set up git command to use proxy.
+```
+RUN git config --global http.proxy http://xxx_proxy_address:port
+```
+
+2. For conda update and env create command, if you are facing some SSL issues, please use below method to avoid it.
+You can try to turn off the ssl_verify or set up https_proxy to use "http" instead of "https".
+```
+RUN /opt/home/conda/bin/conda config --system --set channel_priority flexible --set ssl_verify false --set  proxy_servers.http http://xxx_proxy_address:port --set proxy_servers.https http://xxx_proxy_address:port
+```
+
+Building a Docker image with Spark3.1.1.
 ```
 docker build --tag spark-centos:3.1.1 .
 ```
 
-### Method1: Building OAP Docker Image including Gazelle and other OAP projects
+### Building OAP Docker Image including Gazelle and other OAP projects
+Building a Docker image with OAP v1.2 packages.
 ```
-docker build --tag oap-centos:1.2 .
+docker build --tag oap-centos:1.2.0 .
 ```
 
-### Method2: Building Gazelle Docker Image only
+### Building your own Docker Image with the target applications
+Building a Docker image with your own 
 
-TBD
+
 
 ## Run Spark on Kubernetes
 Before doing this, we assume you have setup Kubernetes enironment and it worked properly. All the tool scripts are under "spark" folder.

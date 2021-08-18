@@ -19,30 +19,36 @@ MAINTAINER The Optimized Analyitics Package for Spark Platform (OAP) Authors htt
 ARG OAP_VERSION=1.2-SNAPSHOT
 ENV OAP_VERSION                       ${OAP_VERSION}
 ENV OAP_HOME              /opt/home/conda/envs/oap-${OAP_VERSION}
+ENV http_proxy=http://child-prc.intel.com:913
+ENV https_proxy=https://child-prc.intel.com:913
+
 
 USER root
 
-ENV http_proxy http://10.239.4.80:913
-ENV https_proxy http://10.239.4.80:913
-ENV HTTP_PROXY http://10.239.4.80:913
-ENV HTTPS_PROXY http://10.239.4.80:913
-
-#install runtime prerequisites
-RUN git config --global http.postBuffer 5m
-RUN git config --global http.proxy http://10.239.4.80:913
+#Git Config
 RUN git config --global https.proxy https://10.239.4.80:913
+RUN git config --global http.proxy http://10.239.4.80:913
+RUN git config --global http.postBuffer 5m
 RUN git config --global --add http.sslVersion tlsv1.2
 
-RUN git clone https://github.com/oap-project/oap-tools.git oap_source && \
+#install runtime prerequisites
+RUN git clone --branch branch-1.2 https://github.com/oap-project/oap-tools.git oap_source && \
   cd /opt/home/oap_source && \
   sh /opt/home/oap_source/dev/install-runtime-dependencies.sh --with-rdma && \
   rm -rf /opt/home/oap_source
 
 # Install OAP conda packages
 COPY oap.yml /opt/home/oap.yml
-RUN /opt/home/conda/bin/conda config --system --set channel_priority flexible --set ssl_verify false --set proxy_servers.http http://child-prc.intel.com:913 --set proxy_servers.https http://child-prc.intel.com:913 && \
+ARG http_proxy=http://child-prc.intel.com:913
+ARG https_proxy=http://child-prc.intel.com:913
+ENV HTTP_PROXY http://child-prc.intel.com:913
+ENV HTTPS_PROXY http://child-prc.intel.com:913
+
+RUN yum install -y python-urllib3
+
+RUN /opt/home/conda/bin/conda config --system --set channel_priority flexible --set ssl_verify false --set  proxy_servers.http http://child-prc.intel.com:913 --set proxy_servers.https http://child-prc.intel.com:913 && \
     /opt/home/conda/bin/conda update -k -v -n base -c defaults conda --insecure && \
-    /opt/home/conda/bin/conda env create -k -v --file /opt/home/oap.yml --insecure
+    /opt/home/conda/bin/conda env create -v --file /opt/home/oap.yml
 
 # Specify the User that the actual main process will run as
 ARG spark_uid=185
