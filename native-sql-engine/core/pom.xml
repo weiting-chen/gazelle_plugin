@@ -22,7 +22,7 @@
   </parent>
 
   <groupId>com.intel.oap</groupId>
-  <artifactId>spark-columnar-core</artifactId>
+  <artifactId>spark-columnar-core-spark${spark.version}</artifactId>
   <packaging>jar</packaging>
   <name>OAP Project Spark Columnar Plugin</name>
 
@@ -54,7 +54,7 @@
       <dependencies>
         <dependency>
           <groupId>com.intel.oap</groupId>
-          <artifactId>spark-sql-columnar-shims-spark311</artifactId>
+          <artifactId>spark-sql-columnar-shims-spark${spark.version}</artifactId>
           <version>${project.version}</version>
         </dependency>
       </dependencies>
@@ -64,7 +64,7 @@
       <dependencies>
         <dependency>
           <groupId>com.intel.oap</groupId>
-          <artifactId>spark-sql-columnar-shims-spark321</artifactId>
+          <artifactId>spark-sql-columnar-shims-spark${spark.version}</artifactId>
           <version>${project.version}</version>
         </dependency>
       </dependencies>
@@ -157,7 +157,7 @@
       <!--scope>provided</scope-->
     </dependency>
     <dependency>
-      <artifactId>spark-arrow-datasource-common</artifactId>
+      <artifactId>spark-arrow-datasource-common-spark${spark.version}</artifactId>
       <groupId>com.intel.oap</groupId>
       <version>${project.version}</version>
       <scope>provided</scope>
@@ -282,7 +282,7 @@
     </dependency>
     <dependency>
       <groupId>com.intel.oap</groupId>
-      <artifactId>spark-arrow-datasource-standard</artifactId>
+      <artifactId>spark-arrow-datasource-standard-spark${spark.version}</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
@@ -324,7 +324,7 @@
     </dependency>
     <dependency>
       <groupId>com.intel.oap</groupId>
-      <artifactId>spark-sql-columnar-shims-common</artifactId>
+      <artifactId>spark-sql-columnar-shims-common-spark${spark.version}</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>

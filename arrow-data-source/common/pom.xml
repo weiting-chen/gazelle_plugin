@@ -10,7 +10,7 @@
     </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>spark-arrow-datasource-common</artifactId>
+  <artifactId>spark-arrow-datasource-common-spark${spark.version}</artifactId>
 
   <dependencies>
     <dependency>

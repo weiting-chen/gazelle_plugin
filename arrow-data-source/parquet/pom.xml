@@ -9,22 +9,37 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spark-arrow-datasource-parquet</artifactId>
+    <artifactId>spark-arrow-datasource-parquet-spark${spark.version}</artifactId>
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/scala</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/scala</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>4.6.1</version>
+                <executions>
+                    <execution>
+                    <id>attach-javadocs</id>
+                    <goals>
+                        <goal>doc-jar</goal>
+                    </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
     <dependencies>
         <dependency>
             <groupId>com.intel.oap</groupId>
-            <artifactId>spark-arrow-datasource-standard</artifactId>
+            <artifactId>spark-arrow-datasource-standard-spark${spark.version}</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.intel.oap</groupId>
-            <artifactId>spark-sql-columnar-shims-common</artifactId>
+            <artifactId>spark-sql-columnar-shims-common-spark${spark.version}</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
