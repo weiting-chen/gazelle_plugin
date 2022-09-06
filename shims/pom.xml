@@ -98,7 +98,21 @@
         <plugin>
             <groupId>net.alchim31.maven</groupId>
             <artifactId>scala-maven-plugin</artifactId>
-             <version>${scala.plugin.version}</version>
+            <version>${scala.plugin.version}</version>
+            <executions>    
+              <execution>
+              <id>attach-javadocs</id>
+              <goals>
+                <goal>doc-jar</goal>
+              </goals>
+              </execution>
+              <execution>
+              <id>attach-sources</id>
+              <goals>
+                <goal>add-source</goal>
+              </goals>
+              </execution>
+            </executions>
         </plugin>
         <plugin>
             <groupId>org.scalatest</groupId>
